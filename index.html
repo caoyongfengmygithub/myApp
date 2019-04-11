@@ -7,12 +7,38 @@
     <title>Document</title>
 </head>
 <body>
+    <button id="btn">btn</button>
+    <ul id="ul"></ul>
     <script>
+        btn.onclick = function(){
+            ajaxFunc(showList);
+        }
+        function ajaxFunc(callback){
+
          var xhr = null;
          if(window.XMLHttpRequest){
              xhr = new XMLHttpRequest();
          }else{
              xhr = new ActiveXObject('Microsoft.XMLHttp');
+         }
+         xhr.open('GET','./getNews.php',true);
+         xhr.send();
+         xhr.onreadystatechange = function(){
+             if(xhr.readyState == 4){
+                 if(xhr.status == 200){
+                    callback(xhr.responseText);
+                 }
+             }
+         }
+      }
+         function showList(data){
+             var value = JSON.parse(data);
+             Console.log(value);
+             var str = '';
+             value.forEach(function(ele,index){
+                 str += '<li>' + ele.title + '-' + ele.data + '</li>'; 
+             })
+             ul.innerHTML = str;
          }
     </script>
 </body>
