@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         var manageCookie = {
+             setCookie : function(name,value,time){
+                 document.cookie = name + '=' + value + ';max-age=' + time;
+                 return this;
+             },
+             removeCookie : function(name){
+                 return this.setCookie(name, '',-1);
+             },
+             getCookie : function(name , callback){
+                 var allCookieArr = document.cookie.split('; ');
+                 for(var i = 0 ; i < allCookieArr.length ; i++){
+                     var itemCookieArr = allCookieArr[i].split('=');
+                     if (itemCookieArr[0] == name) {
+                         callback(itemCookieArr[1]);
+                         return this;
+                     }
+                 }
+                 callback(undefined);
+                 return this;
+             }
+         }
+         manageCookie
+              .setCookie('color','red',10000)
+              .setCookie('age',18,10000)
+              .setCookie('shcool','koki',10000)
+              .setCookie('teach','aimee',10000)
+              .getCookie('age',function(data){
+                  console.log(data);
+              });
+              
+    </script>
+</body>
+</html>

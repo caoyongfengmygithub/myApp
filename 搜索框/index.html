@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            list-style: none;
+            text-decoration: none;
+        }
+        .wrapper{
+            margin: 100px;
+        }
+        input{
+            width: 400px;
+            height: 34px;
+        }
+        ul{
+            display: none;
+            width: 400px;
+            border: 1px solid #ccc;
+            /* display: block */
+        }
+        li:hover{
+            background: #ddd;
+        }
+        a{
+            font-size: 14px;
+            color: #999;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+   <div class="wrapper">
+       <input type="text">
+       <ul></ul>
+   </div>
+
+   <script>
+       var oInput = document.getElementsByTagName('input')[0];
+       var oUl = document.getElementsByTagName('ul')[0]; 
+       oInput.oninput = function(){
+           var value = this.value;
+
+           var oScript = document.createElement('script');
+           oScript.src = 'https://smart.sug.so.com/suggest?pid=webpage&word=' + value + '&srcg=&src=hao_home&encodein=utf-8&encodeout=utf-8&callback=doJson';
+           document.body.appendChild(oScript);
+           document.body.removeChild(oScript);
+           }
+           function doJson(data){
+               var s = data.s,
+                   str = '';
+                   if (s.length > 0) {
+                            s.forEach(function(ele,index){
+                            str += '<li>' + ele + '</li>';
+                        })
+                        oUl.innerHTML = str;
+                        oUl.style.display = 'block';   
+                   } else {
+                       oUl.style.display = 'none';
+                   }
+                  
+           }
+      
+   </script>
+</body>
+</html>
